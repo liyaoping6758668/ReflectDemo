@@ -31,6 +31,9 @@ public class TestReflect {
     //通过反射对person可以进行操作
     @Test
     public void test2() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchFieldException {
+        /**
+         * 1.使用反射调用公有的构造方法，属性和方法
+         */
         //1.创建person对象
         Class personClass = Person.class;
         Constructor constructor = personClass.getConstructor(String.class, int.class);
@@ -43,6 +46,24 @@ public class TestReflect {
         System.out.println(p);
         Method show = personClass.getDeclaredMethod("show");
         show.invoke(p);
+
+        /**
+         * 2.使用反射调用私有构造方法、属性、方法
+         */
+        Constructor constructor1 = personClass.getDeclaredConstructor(String.class);
+        constructor1.setAccessible(true);
+        Object newInstance = constructor1.newInstance("陈龙");
+        Person p1=(Person)newInstance;
+        System.out.println(p1);
+        //调用私有属性
+        Field name = personClass.getDeclaredField("name");
+        name.setAccessible(true);
+        name.set(p1,"李耀平");
+        System.out.println(p1);
+        //调用私有方法
+        Method showNation = personClass.getDeclaredMethod("showNation",String.class);
+        showNation.setAccessible(true);
+        showNation.invoke(p1,"日本子");
 
     }
 }
