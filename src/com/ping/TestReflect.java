@@ -66,4 +66,26 @@ public class TestReflect {
         showNation.invoke(p1,"日本子");
 
     }
+
+    /**
+     * 3.通过class实例方式
+     */
+    @Test
+    public void test3() throws ClassNotFoundException {
+        //方式1
+        Class<Person> personClass = Person.class;
+        System.out.println(personClass);
+
+        //方式2
+        Person person=new Person();
+        Class aClass = person.getClass();
+        System.out.println(aClass);
+
+        //方式3
+        Class aClass1 = Class.forName("com.ping.Person");
+        System.out.println(aClass1);
+
+        System.out.println(personClass==aClass);
+        System.out.println(personClass==aClass1);
+    }
 }
